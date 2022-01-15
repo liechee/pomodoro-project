@@ -44,10 +44,14 @@
     <div class="grid">
     </div>
 
-    <button class="control" id="reset">
-        Reset
-    </button>
-
+    <div class="btn">
+        <button>
+            <a href="pom veer2.html">Go back</a>
+            </button>
+        <button class="control" id="reset">
+            Reset
+        </button>
+    </div>
     <script>
 
         //to display board when tab is opened
