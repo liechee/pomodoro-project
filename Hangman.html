@@ -46,7 +46,7 @@
            <div id="message"></div>
            <div id="answer"></div>
            <div class="btn">
-               <button><a href="Pomodoro.html"></a>Go back</button>
+               <button><a href="Pomodoro.html">Go Back</a></button>
                <button id="reset" onclick="resetGame()">Reset</button>
            </div>
        </div>
@@ -225,7 +225,7 @@
         let lettersInword = []
         let blanks = 0
 
-        let blanksAndSuccesses = []
+        let correctGuesses = []
         let wrongLetters = []
         let lives = 10
       
@@ -237,12 +237,12 @@
 
         lives = 10
         wrongLetters = []
-        blanksAndSuccesses = []
+        correctGuesses = []
 
         for(let i = 0; i < blanks; i++){
-            blanksAndSuccesses.push('_')
+            correctGuesses.push('_')
         }
-        document.getElementById('wordToGuess').innerHTML = blanksAndSuccesses.join(' ')
+        document.getElementById('wordToGuess').innerHTML = correctGuesses.join(' ')
         document.getElementById('lives').innerHTML = lives
     }
 
@@ -256,7 +256,7 @@
         if (correctLetter){
             for(let k = 0; k < blanks; k++){
                 if(randomWord[k] === letter){
-                    blanksAndSuccesses[k] = letter
+                    correctGuesses[k] = letter
                 }
             }
         }else{
@@ -267,10 +267,10 @@
     }
     function gameOver(){
         document.getElementById('lives').innerHTML = lives
-        document.getElementById('wordToGuess').innerHTML = blanksAndSuccesses.join(' ')
+        document.getElementById('wordToGuess').innerHTML = correctGuesses.join(' ')
         document.getElementById("wrongLetters").innerHTML = wrongLetters.join(' ')
 
-        if(lettersInword.toString() === blanksAndSuccesses.toString()){
+        if(lettersInword.toString() === correctGuesses.toString()){
             message.innerHTML = `You won`
             answer.innerHTML = `The answer is ${randomWord}`
             startGame()
