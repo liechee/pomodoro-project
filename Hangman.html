@@ -46,7 +46,7 @@
            <div id="message"></div>
            <div id="answer"></div>
            <div class="btn">
-               <button><a href="Pomodoro.html">Go Back</a></button>
+               <button><a href="pomodoro.html">Go Back</a></button>
                <button id="reset" onclick="resetGame()">Reset</button>
            </div>
        </div>
@@ -266,8 +266,6 @@
             lives --
             document.getElementById('lives').innerHTML = lives
         }
-    }
-    function gameOver(){
         document.getElementById('lives').innerHTML = lives
         document.getElementById('wordToGuess').innerHTML = correctGuesses.join(' ')
         document.getElementById("wrongLetters").innerHTML = wrongLetters.join(' ')
