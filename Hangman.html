@@ -273,7 +273,7 @@
         "wriggle","wrist","writer","writing","wrong","wry","yak","yam","yard","yarn","yawn","year","yell","yellow","yielding","yoke",
         "young","youthful","yummy","zany","zealous","zebra","zephyr","zesty","zinc","zip","zipper","zippy","zonked","zoo","zoom"]
        
-        let randomWord = ''
+            let randomWord = ''
         let lettersInword = []
         let blanks = 0
 
@@ -282,7 +282,9 @@
         let lives = 10
         let message = document.getElementById('message')
         let answer = document.getElementById('answer')
-      
+        let gameResult = ''
+        let rightAnswer = ''
+
     function startGame(){
         randomWord = wordList[Math.floor(Math.random() * wordList.length)]
         lettersInword = randomWord.split('')
@@ -317,22 +319,27 @@
             lives --
             document.getElementById('lives').innerHTML = lives
         }
-        function gameOver(){
+    }
+    function gameOver(){
         document.getElementById('lives').innerHTML = lives
         document.getElementById('wordToGuess').innerHTML = correctGuesses.join(' ')
         document.getElementById("wrongLetters").innerHTML = wrongLetters.join(' ')
 
-        if(lettersInword === correctGuesses){
-            message.innerHTML = `You won`
-            answer.innerHTML = `The answer is ${randomWord}`
+        if(lettersInword.toString() === correctGuesses.toString()){
+            gameResult = `You won`
+            rightAnswer = `The answer is ${randomWord}`
             startGame()
+       
         } else if(lives === 0){
-            message.innerHTML = `You lose`
-            answer.innerHTML = `The answer is ${randomWord}`
+            gameResult = `You lose`
+            rightAnswer = `The answer is ${randomWord}`
             startGame()
         }
-    }
 
+        message.innerHTML = gameResult
+        answer.innerHTML = rightAnswer
+        
+    }
     startGame()
 
     function resetGame(){
