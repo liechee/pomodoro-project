@@ -154,7 +154,8 @@
         "optimal","orange","oranges","order","ordinary","organic","ossified","outgoing","outrageous","outstanding","oval",
         "oven","overconfident","overflow","overjoyed","overrated","overt","overwrought","owe","own","pack","paddle","page",
         "pail","painful","painstaking","paint","pale","paltry","pan","pancake","panicky","panoramic","paper","parallel",
-        "parcel","parched","park","parsimonious","part","partner","party","pass","passenger","past","paste","pastoral","picayune","pick","pickle","picture","pie","pies","pig","pigs","pin","pinch","pine","pink","pipe","piquant",
+        "parcel","parched","park","parsimonious","part","partner","party","pass","passenger","past","paste","pastoral",
+         "pickle","picture","pie","pies","pig","pigs","pin","pinch","pine","pink","pipe","piquant",
         "pizzas","place","placid","plain","plan","plane","planes","plant","plantation","plants","plastic","plate","plausible",
         "poised","poison","poke","polish","polite","political","pollution","poor","pop","popcorn","porter","position",
         "possess","possessive","possible","post","pot","potato","pour","powder","power","powerful","practice","pray",
@@ -228,8 +229,9 @@
         let correctGuesses = []
         let wrongLetters = []
         let lives = 10
+        let message = document.getElementById('message')
+        let answer = document.getElementById('answer')
       
-
     function startGame(){
         randomWord = wordList[Math.floor(Math.random() * wordList.length)]
         lettersInword = randomWord.split('')
