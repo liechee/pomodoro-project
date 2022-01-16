@@ -317,6 +317,7 @@
             lives --
             document.getElementById('lives').innerHTML = lives
         }
+        function gameOver(){
         document.getElementById('lives').innerHTML = lives
         document.getElementById('wordToGuess').innerHTML = correctGuesses.join(' ')
         document.getElementById("wrongLetters").innerHTML = wrongLetters.join(' ')
@@ -341,6 +342,7 @@
     document.onkeyup = function(event){
         let lettersGuessed = String.fromCharCode(event.which).toLocaleLowerCase()
         checkLetters(lettersGuessed)
+        gameOver()
     }
 
     </script>
