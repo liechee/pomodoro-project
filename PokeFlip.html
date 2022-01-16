@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PokeFlip</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+            background-color: yellowgreen;
+            background-image: url("background.png");
+            text-align: center;
+        }
+
+        .heading {
+            font-size: 30pt;
+            font-style: bold;
+            font-weight: bolder;
+        }
+
+        .score {
+            display: flex;
+        }
+
+        .message {
+            font-size: 20px;
+            font-style: bold;
+            font-weight: bold;
+        }
+        .grid {
+            display: flex;
+            text-align: center;
+            flex-wrap: wrap;
+            width: 400px;
+            height: 300px;
+            margin-top: 50px;
+            margin-left: 420px;
+            cursor: pointer;
+        }
+
+        .btn {
+            display: inline-block;
+            border: none;
+            height: 30px;
+            width: 120px;
+            padding: 8px 20px;
+            margin-right: 10px;
+            margin-left: 10px;
+            margin-top: 20px;
+            margin-bottom: 0;
+            font-size: 18px;
+            color: #449d44;
+            font-weight: normal;
+            cursor: pointer;
+            border-radius: 6px;
+            background-color: #fff;
+
+        }
+    </style>
+</head>
+<body onload="startGame()">
+
+    <h1 class="heading">
+        PokeFlip
+    </h1>
+
+    <h3>
+        Score: <span class="display" id="score">0</span>
+    </h3>
+
+    <div class="message" id="result">
+        Flip open a pokeball and find their match!
+    </div>
+    
+    <div class="grid">
+    </div>
+
+    <button class="btn" id="reset">
+        Reset
+    </button>
+
+    <a href="pomodoro.html"><button class="btn" id="back">
+        Back
+    </button></a>
+
+    <script>
+
+        function startGame() {
+        
+            const cardArr = [
+            { name: 'pokemon 1', img: 'pokemon1.png'},
+            { name: 'pokemon 2', img: 'pokemon2.png'},
+            { name: 'pokemon 3', img: 'pokemon3.png'},
+            { name: 'pokemon 4', img: 'pokemon4.png'},
+            { name: 'pokemon 5', img: 'pokemon5.png'},
+            { name: 'pokemon 6', img: 'pokemon6.png'},
+            { name: 'pokemon 1', img: 'pokemon1.png'},
+            { name: 'pokemon 2', img: 'pokemon2.png'},
+            { name: 'pokemon 3', img: 'pokemon3.png'},
+            { name: 'pokemon 4', img: 'pokemon4.png'},
+            { name: 'pokemon 5', img: 'pokemon5.png'},
+            { name: 'pokemon 6', img: 'pokemon6.png'}
+            ];
+
+            //generate cards by randomly shuffling images inside the array//
+            //fisher yates algorithm
+            //j = random number
+            //temporaryVal = temporary values for swapping
+            let i = cardArr.length, j, temporaryVal;
+            //decrement array length
+            while (--i > 0) {
+                // get random number ranging between 0 and i
+                j = Math.floor(Math.random() * (i+1)); 
+                // Get random number ranging between 0 and i
+                temporaryVal = cardArr[j];
+                cardArr[j] = cardArr[i];
+                cardArr[i] = temporaryVal;
+            };
+
+            //console.log(cardArr);
+
+            let cards_picked = [];
+            let cards_ID = [];
+            let cards_match = [];
+            const score = document.getElementById('score');
+            const result = document.getElementById('result');
+
+            //function to display the cards in a grid//
+            //loop through cardaArr and create image element for each card
+            function displayBoard() {
+
+                for (let i = 0; i < cardArr.length; i++) {
+
+                    const card = document.createElement('img')
+                    const board = document.querySelector('.grid');
+
+                    //sets the card image as blank.png
+                    //and sets its id from number 0-11
+                    card.setAttribute('src', 'blank.png')
+                    card.setAttribute('data-id', i)
+
+                    //listen when cards are clicked and
+                    //invoke a function to flip them
+                    card.addEventListener('click', flipCard)
+
+                    //displays the cards with ids on the .grid
+                    board.append(card)
+
+                }
+
+            };
+            
+            //invoke the function
+            displayBoard()
+
+            //function for flipping the cards
+            function flipCard() {
+
+                //declares a variable for the ID's of images 
+                //from function displayBoard
+                let cardId = this.getAttribute('data-id')
+
+                //push the cards from cardArr
+                //using the declared ID
+                cards_picked.push(cardArr[cardId].name)
+                cards_ID.push(cardId)
+
+                //add image to the board
+                //base on the id it holds
+                this.setAttribute('src', cardArr[cardId].img)
+                checkCards();
+            };
+
+            function checkCards() {
+                //if there are 2 cards chosen
+                //check if they are matched
+                if (cards_picked.length === 2) {
+                    setTimeout(checkMatches, 500)
+                } else {
+                    result.innerHTML = 'Pick another ball.'
+                }
+            }
+
+            //checking for matches
+            function checkMatches() {
+
+                const cards = document.querySelectorAll('img')
+
+                //condition when you have clicked the same image//
+                if (cards_ID[0] === cards_ID[1]) {
+
+                    //displays a message//
+                    result.innerHTML = 'You have clicked the same ball!'
+
+                    //sets the card to be blank again
+                    cards[cards_ID[0]].setAttribute('src', 'blank.png')
+                    cards[cards_ID[1]].setAttribute('src', 'blank.png')
+
+                }
+                //condition when the chosen cards are the same//
+                else if (cards_picked[0] === cards_picked[1]) {
+
+                    result.innerHTML = 'You found a match!'
+
+                    //removes the function that flips the cards 
+                    //when these cards are clicked
+                    cards[cards_ID[0]].removeEventListener('click', flipCard)
+                    cards[cards_ID[1]].removeEventListener('click', flipCard)
+
+                    //pushes the cards that has been matched
+                    //into the array of cardsMatch
+                    cards_match.push(cards_picked)
+
+                } 
+                //condition when two chosen cards are not match
+                else {
+
+                    //displays a message
+                    result.innerHTML = 'Balls are not matched, try again.'
+
+                    //sets the cards to be blank again
+                    cards[cards_ID[0]].setAttribute('src', 'blank.png')
+                    cards[cards_ID[1]].setAttribute('src', 'blank.png')
+
+                }
+
+                updateScore();
+            };
+
+            function updateScore() {
+                //calls these arrays to get scores
+                cards_picked = []
+                cards_ID = []
+
+                //displays the score 
+                //counting pairs that has been matched 
+                //store in array of cardsMatch
+                score.innerHTML = cards_match.length
+
+                let total_pairs = cardArr.length / 2
+                let matched_pairs = cards_match.length
+
+                //check if all cards are matched
+                if  (matched_pairs === total_pairs) {
+                    result.innerHTML = 'Congratulations! You matched them all!'
+                }
+            };
+
+            const reset = document.getElementById('reset');
+            reset.addEventListener('click', resetGame);
+
+            function resetGame() {
+                location.reload();
+            };
+
+
+        }
+
+    </script>
+
+</body>
+</html>
