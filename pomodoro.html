@@ -151,12 +151,12 @@
                     Tap to play games! 
                 </h3>
 
-                <a href="PokeFlip.html"><button class="games-btn" id="pokeflip">
+                <a href="mem.html"><button class="games-btn" id="pokeflip">
                     PokeFlip
                 </button></a>
 
-                <a href="Hangman.html"><button class="games-btn" id="pokeflip">
-                    Hangman
+                <a href="hangnam_game.html"><button class="games-btn" id="pokeflip">
+                    Hangnam
                 </button></a>
             </div>
 
@@ -172,6 +172,7 @@
        let longBreak = document.getElementById("js-longBreak")
        let games = document.querySelectorAll(".games-div")
        let pokeflip = document.getElementById("pokeflip");
+       let bell = new Audio("bell.mp3");
 
        pomodoro.addEventListener('click', () => {
         time.innerText = `25:00`
@@ -233,7 +234,7 @@
                     if (seconds === 0 && minutes ===0){
                         clearInterval(interval)
                         timeleft = `00:00`
-                        message.innerHTML = `Time's Up!`
+                        bell.play();
                     }
                     time.innerHTML = timeleft
                 }, 1000
