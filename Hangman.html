@@ -272,7 +272,7 @@
         document.getElementById('wordToGuess').innerHTML = correctGuesses.join(' ')
         document.getElementById("wrongLetters").innerHTML = wrongLetters.join(' ')
 
-        if(lettersInword.toString() === correctGuesses.toString()){
+        if(lettersInword === correctGuesses){
             message.innerHTML = `You won`
             answer.innerHTML = `The answer is ${randomWord}`
             startGame()
