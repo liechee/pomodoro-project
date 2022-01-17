@@ -106,6 +106,7 @@
             { name: 'pokemon 6', img: 'pokemon6.png'}
             ];
 
+            //fisher yates algorithm
             let i = cardArr.length, j, temporaryVal;
 
             while (--i > 0) {
@@ -197,14 +198,14 @@
                     cards[cards_ID[1]].setAttribute('src', 'blank.png')
 
                 }
+                
+                cards_picked = []
+                cards_ID = []
 
                 updateScore();
             };
 
             function updateScore() {
-
-                cards_picked = []
-                cards_ID = []
 
                 score.innerHTML = cards_match.length
 
