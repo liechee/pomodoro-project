@@ -237,6 +237,7 @@
         let correctGuesses = []
         let wrongLetters = []
         let lives = 10
+
         let message = document.getElementById('message')
         let answer = document.getElementById('answer')
         let gameResult = ''
@@ -251,6 +252,7 @@
         wrongLetters = []
         correctGuesses = []
 
+        //REVIEW
         for(let i = 0; i < blanks; i++){
             correctGuesses.push('_')
         }
@@ -300,11 +302,10 @@
     function resetGame(){
         location.reload()
     }
-        
     startGame()
 
     document.onkeyup = function(event){
-        let lettersGuessed = String.fromCharCode(event.keyCode).toLocaleLowerCase()
+        let lettersGuessed = String.fromCharCode(event.which).toLocaleLowerCase()
         checkLetters(lettersGuessed)
         gameOver()
     }
