@@ -90,6 +90,7 @@
        <div class="results">
            <div><b>Wrong Letters:</b><span id="wrongLetters"></span></div>
            <div><b>Lives remaining:</b><span id="lives"></span></div>
+           <div><b>Score: </b><span id="score"></span></div>
 
            <h3 class="message" id="message"></h3>
            <h3 class="answer" id="answer"></h3>
@@ -236,6 +237,8 @@
 
         let correctGuesses = []
         let wrongLetters = []
+        let correctWords = []
+        let result = []
         let lives = 10
 
         let message = document.getElementById('message')
@@ -252,7 +255,8 @@
         wrongLetters = []
         correctGuesses = []
 
-        
+        console.log(randomWord);
+
         for(let i = 0; i < blanks; i++){
             correctGuesses.push('_')
         }
@@ -260,36 +264,66 @@
         document.getElementById('lives').innerHTML = lives
     }
 
-    function checkLetters(letter){
+    function checkLetters(letter) {
+        
         let correctLetter = false
-        for(let j = 0; j < blanks; j++){
-            if (randomWord[j] === letter){
+        for (let j = 0; j < blanks; j++) {
+            if (randomWord[j] === letter) {
                 correctLetter = true
             }
         }
-        if (correctLetter){
-            for(let k = 0; k < blanks; k++){
-                if(randomWord[k] === letter){
+        
+        if (correctLetter) { //true
+            for (let k = 0; k < blanks; k++){
+                if (randomWord[k] === letter){
                     correctGuesses[k] = letter
                 }
             }
-        }else{
-            wrongLetters.push(letter)
-            lives --
-            document.getElementById('lives').innerHTML = lives
+        } 
+        
+        else { //false
+
+            let alreadyEntered = false
+            for (let n = 0; n < 11; n++) {
+                if (wrongLetters[n] === letter) {
+                    alreadyEntered = true
+                }
+            }
+
+            if (alreadyEntered) { //true
+                for(let l = 0; l < 11; l++) {
+                if (wrongLetters[l] === letter) {
+                    wrongLetters[l] = letter
+                    }
+                }
+            } 
+
+            else { //false
+                wrongLetters.push(letter)
+                lives --
+                document.getElementById('lives').innerHTML = lives;
+            }
         }
+
     }
-    function gameOver(){
+    
+    function gameOver() {
         document.getElementById('lives').innerHTML = lives
         document.getElementById('wordToGuess').innerHTML = correctGuesses.join(' ')
         document.getElementById("wrongLetters").innerHTML = wrongLetters.join(' ')
 
-        if(lettersInword.toString() === correctGuesses.toString()){
+        if (lettersInword.toString() === correctGuesses.toString()) {
             gameResult = `You won`
             rightAnswer = `The answer is ${randomWord}`
+            correctWords.push(correctGuesses)
+            result.push(correctWords)
+            
             startGame()
+            updateScore();
+
+            correctWords = [];
        
-        } else if(lives === 0){
+        } else if (lives === 0){
             gameResult = `You lose`
             rightAnswer = `The answer is ${randomWord}`
             startGame()
@@ -299,6 +333,7 @@
         answer.innerHTML = rightAnswer
         
     }
+
     function resetGame(){
         location.reload()
     }
@@ -308,6 +343,15 @@
         let lettersGuessed = String.fromCharCode(event.which).toLocaleLowerCase()
         checkLetters(lettersGuessed)
         gameOver()
+    }
+
+    function updateScore() {
+
+        let score = result.length
+        let scoreDiv = document.getElementById('score')
+
+        scoreDiv.innerHTML = score
+
     }
 
     </script>
