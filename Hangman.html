@@ -265,24 +265,23 @@
     }
 
     function checkLetters(letter) {
-
+        
         let correctLetter = false
         for (let j = 0; j < blanks; j++) {
-            if (randomWord.includes(letter)) {
+            if (randomWord[j] === letter) {
                 correctLetter = true
             }
         }
         
-        if (correctLetter) { //true
+        if (correctLetter) { 
             for (let k = 0; k < blanks; k++){
-                if (randomWord[k] === letter) {
+                if (randomWord[k] === letter){
                     correctGuesses[k] = letter
                 }
             }
         } 
         
-        else { //false
-
+        else { 
             let alreadyEntered = false
             for (let n = 0; n < 11; n++) {
                 if (wrongLetters.includes(letter)) {
@@ -290,15 +289,16 @@
                 }
             }
 
-            if (!alreadyEntered) { //false
-            
+            if (!alreadyEntered) { 
+               
                 wrongLetters.push(letter)
                 lives --
                 document.getElementById('lives').innerHTML = lives;
             }
         }
-    }
 
+    }
+    
     function gameOver() {
         document.getElementById('lives').innerHTML = lives
         document.getElementById('wordToGuess').innerHTML = correctGuesses.join(' ')
@@ -315,7 +315,7 @@
 
             correctWords = [];
        
-        } else if(lives === 0){
+        } else if (lives === 0){
             gameResult = `You lose`
             rightAnswer = `The answer is ${randomWord}`
             startGame()
@@ -348,4 +348,4 @@
 
     </script>
 </body>
-</html>
+</html
